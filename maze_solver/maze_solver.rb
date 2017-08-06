@@ -7,14 +7,20 @@ class MazeSolver
     @grid = parse_file(maze_file_path)
     @start = find('S')
     @end = find('E')
+    # @move_tree = build_move_tree
   end
 
-private
+# private
 
   def parse_file(file_path)
-    grid = File.readlines(file_path).chomp
+    grid = File.readlines(file_path).map(&:chomp)
     grid.map! { |row| row.split('') }
     grid
+  end
+
+  def [](pos)
+    x, y = pos
+    @grid[x][y]
   end
 
   def find(char)
@@ -24,6 +30,16 @@ private
       end
     end
     raise "Maze does not contain #{char}"
+  end
+
+  def neighbors(pos)
+    neighbors = [-1, 0, 1].product([-1, 0, 1])
+    neighbors.map! { |n_pos| [n_pos[0] + pos[0], n_pos[1] + pos[1]] }
+    neighbors.reject { |n_pos| n_pos == pos || self[n_pos].nil? }
+  end
+
+  def build_move_tree(start_pos)
+
   end
 
 end
