@@ -38,8 +38,18 @@ class MazeSolver
     neighbors.reject { |n_pos| n_pos == pos || self[n_pos].nil? }
   end
 
-  def build_move_tree(start_pos)
+  def possible_moves(pos)
+    neighbors(pos).select { |n_pos| self[n_pos] == ' ' }
+  end
 
+  def build_move_tree
+    queue = [MazeNode.new(@start)]
+    visited = []
+    until queue.empty?
+      visited << queue.shift
+      return visited.last.path_trace if visited.last.position == @end
+      possible_moves(visited.last.position).each do |pos|
+    end
   end
 
 end

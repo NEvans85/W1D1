@@ -1,9 +1,8 @@
 class MazeNode
 
-  attr_reader :value, :parent, :children, :position
+  attr_reader :parent, :children, :position
 
-  def intialize(value, pos, parent = nil)
-    @value = value
+  def intialize(pos, parent = nil)
     @position = pos
     @parent = parent
     @children = []
@@ -25,27 +24,27 @@ class MazeNode
     child_node.parent = nil
   end
 
-  def dfs(target_value)
-    return self if @value == target_value
-    @children.each do |child|
-      kid_search = child.dfs(target_value)
-      return kid_search unless kid_search.nil?
-    end
-    nil
-  end
-
-  def bfs(target_value)
-    queue = [self]
-    until queue.empty?
-      el_to_test = queue.shift
-      if el_to_test.value == target_value
-        return el_to_test
-      else
-        queue += el_to_test.children
-      end
-    end
-    nil
-  end
+  # def dfs(target_value)
+  #   return self if @value == target_value
+  #   @children.each do |child|
+  #     kid_search = child.dfs(target_value)
+  #     return kid_search unless kid_search.nil?
+  #   end
+  #   nil
+  # end
+  #
+  # def bfs(target_value)
+  #   queue = [self]
+  #   until queue.empty?
+  #     el_to_test = queue.shift
+  #     if el_to_test.value == target_value
+  #       return el_to_test
+  #     else
+  #       queue += el_to_test.children
+  #     end
+  #   end
+  #   nil
+  # end
 
   def depth
     return 1 if parent.nil?
@@ -53,7 +52,7 @@ class MazeNode
   end
 
   def path_trace
-    return [@position] if parent.nil?
+    return [@positon] if parent.nil?
     [@position] + parent.path_trace
   end
 end
