@@ -1,0 +1,3 @@
+class MazeNode
+
+end
