@@ -1,3 +1,5 @@
+require_relative 'poly_tree_node'
+
 class Player
   attr_accessor :name
 
@@ -26,7 +28,7 @@ class AiPlayer
 
   def initialize(name = "CP")
     @name = name
-    @candidate_words = File.readlines("dictionary.txt").to_set
+    @candidate_words = File.readlines("dictionary.txt")
     @candidate_words.map!(&:chomp)
   end
 
@@ -58,19 +60,26 @@ class AiPlayer
 
 end
 
-class BossAI < Player
+class BossAI < AiPlayer
 
-  attr_reader :current_fragment
 
   def initialize(name = 'BOSS')
     @move_tree = []
     super(name)
   end
 
-  def display_fragment(frag)
-    @current_fragment == frag
+  def build_move_tree
+
   end
 
-  def build_move_tree
+  def guess
+
+  end
+
+  def possible_moves(str_frag)
+    possible_words = @candidate_words.dup.select do |word|
+      word[0...str_frag.length] == str_frag
+    end
+    possible_words.map { |word| word[str_frag.length] }.uniq
   end
 end
