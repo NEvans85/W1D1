@@ -57,3 +57,20 @@ class AiPlayer
   end
 
 end
+
+class BossAI < Player
+
+  attr_reader :current_fragment
+
+  def initialize(name = 'BOSS')
+    @move_tree = []
+    super(name)
+  end
+
+  def display_fragment(frag)
+    @current_fragment == frag
+  end
+
+  def build_move_tree
+  end
+end

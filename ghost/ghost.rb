@@ -60,7 +60,7 @@ class Game
   end
 
   def valid_play?(guess)
-    ("a".."z").cover?(guess) && possible_move?(guess) && guess.length == 1
+    guess.length == 1 && ("a".."z").cover?(guess) &&  possible_move?(guess) 
   end
 
   def possible_move?(guess)
