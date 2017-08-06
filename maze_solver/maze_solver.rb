@@ -9,6 +9,8 @@ class MazeSolver
     @end = find('E')
   end
 
+private
+
   def parse_file(file_path)
     grid = File.readlines(file_path).chomp
     grid.map! { |row| row.split('') }
