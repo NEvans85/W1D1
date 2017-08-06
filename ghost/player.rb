@@ -68,8 +68,15 @@ class BossAI < AiPlayer
     super(name)
   end
 
-  def build_move_tree
-
+  def build_move_tree(root)
+    @move_tree = []
+    parent = PolyTreeNode.new(root_value)
+    kid_values = possible_moves(root_value.dup)
+    kid_values.reject! { |chr| losing_move?(chr) }
+    kid_values.each do |kid_value|
+      kid = PolyTreeNode.new(kid_value)
+      kid.parent = parent
+    end
   end
 
   def guess
