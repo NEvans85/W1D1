@@ -9,7 +9,7 @@ class MazeNode
   end
 
   def parent=(node)
-    @parent.children.delete(self) unless @parent == node || @parent.nil?
+    @parent.remove_child(self) unless @parent == node || @parent.nil?
     @parent = node
     @parent.children << self unless @parent.nil? ||
                                     @parent.children.include?(self)
@@ -46,10 +46,10 @@ class MazeNode
   #   nil
   # end
 
-  def depth
-    return 1 if parent.nil?
-    1 + parent.depth
-  end
+  # def depth
+  #   return 1 if parent.nil?
+  #   1 + parent.depth
+  # end
 
   def path_trace
     return [@positon] if parent.nil?
