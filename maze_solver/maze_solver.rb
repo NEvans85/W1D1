@@ -1,4 +1,4 @@
-require_relative 'maze_node'
+# require_relative 'maze_node'
 require 'byebug'
 
 class MazeSolver
@@ -51,14 +51,10 @@ class MazeSolver
     raise "Maze does not contain #{char}"
   end
 
-  def neighbors(pos)
-    neighbors = [-1, 0, 1].product([-1, 0, 1])
-    neighbors.map! { |n_pos| [n_pos[0] + pos[0], n_pos[1] + pos[1]] }
-    neighbors.reject { |n_pos| n_pos == pos || self[n_pos].nil? }
-  end
-
   def possible_moves(pos)
-    neighbors(pos).select { |n_pos| self[n_pos] == ' ' }
+    neighbors = [[-1, 0], [0, 1], [1, 0], [0, -1]]
+    neighbors.map! { |n_pos| [n_pos[0] + pos[0], n_pos[1] + pos[1]] }
+    neighbors.reject { |n_pos| self[n_pos] == '*' }
   end
 
   # def find_path
@@ -77,15 +73,15 @@ class MazeSolver
   #   nil
   # end
 
-  def find_path(node = MazeNode.new(@start_pos))
-    @visited << node.position
-    return @visited if node.position == @end_pos
-    possible_moves(node.position).each do |move_pos|
-      unless self[move_pos] == '*' || @visited.include?(move_pos)
-        debugger
-        return find_path(MazeNode.new(move_pos, node))
-      end
+  def find_path(pos = @start_pos)
+    @visited << pos
+    return [pos] if pos == @end_pos
+    possible_moves(pos).each do |move_pos|
+      next if @visited.include?(move_pos)
+      path = find_path(move_pos)
+      return [pos] + path unless path.nil?
     end
+    debugger
     nil
   end
 

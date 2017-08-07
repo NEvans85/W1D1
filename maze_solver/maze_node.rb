@@ -1,11 +1,11 @@
-class MazeNode
-
-  attr_reader :position, :parent
-
-  def initialize(pos, parent = nil)
-    @position = pos
-    @parent = parent
-  end
+# class MazeNode
+# 
+#   attr_reader :position, :parent
+#
+#   def initialize(pos, parent = nil)
+#     @position = pos
+#     @parent = parent
+#   end
 
   # def parent=(node)
   #   @parent = node
@@ -47,8 +47,8 @@ class MazeNode
   #   1 + parent.depth
   # end
 
-  def path_trace
-    return [@position] if parent.nil?
-    [@position] + parent.path_trace
-  end
+  # def path_trace
+  #   return [@position] if parent.nil?
+  #   [@position] + parent.path_trace
+  # end
 end
