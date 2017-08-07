@@ -1,6 +1,3 @@
-# require_relative 'maze_node'
-require 'byebug'
-
 class MazeSolver
 
   attr_reader :start_pos, :end_pos, :grid
@@ -17,7 +14,7 @@ class MazeSolver
     display_maze
   end
 
-# private
+  private
 
   def parse_file(file_path)
     @grid = File.readlines(file_path).map(&:chomp)
@@ -57,22 +54,6 @@ class MazeSolver
     neighbors.reject { |n_pos| self[n_pos] == '*' }
   end
 
-  # def find_path
-  #   queue = [MazeNode.new(@start_pos)]
-  #   visited = []
-  #   until queue.empty?
-  #     visited << queue.shift
-  #     return visited.last.path_trace if visited.last.position == @end_pos
-  #     possible_moves(visited.last.position).each do |pos|
-  #       if visited.none? { |node| node.position == pos } && self[pos] != '*'
-  #         debugger
-  #         queue << MazeNode.new(pos, visited.last)
-  #       end
-  #     end
-  #   end
-  #   nil
-  # end
-
   def find_path(pos = @start_pos)
     @visited << pos
     return [pos] if pos == @end_pos
@@ -81,7 +62,6 @@ class MazeSolver
       path = find_path(move_pos)
       return [pos] + path unless path.nil?
     end
-    debugger
     nil
   end
 
