@@ -1,28 +1,24 @@
 class MazeNode
 
-  attr_reader :parent, :children, :position
+  attr_reader :position, :parent
 
   def initialize(pos, parent = nil)
     @position = pos
-    self.parent = parent
-    @children = []
+    @parent = parent
   end
 
-  def parent=(node)
-    @parent.remove_child(self) unless @parent == node || @parent.nil?
-    @parent = node
-    @parent.children << self unless @parent.nil? ||
-                                    @parent.children.include?(self)
-  end
+  # def parent=(node)
+  #   @parent = node
+  # end
 
-  def add_child(child_node)
-    child_node.parent = self
-  end
-
-  def remove_child(child_node)
-    raise 'NODE ERROR: not a child' unless @children.include?(child_node)
-    child_node.parent = nil
-  end
+  # def add_child(child_node)
+  #   child_node.parent = self
+  # end
+  #
+  # def remove_child(child_node)
+  #   raise 'NODE ERROR: not a child' unless @children.include?(child_node)
+  #   child_node.parent = nil
+  # end
 
   # def dfs(target_value)
   #   return self if @value == target_value
