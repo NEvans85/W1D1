@@ -8,6 +8,7 @@ class MazeSolver
     parse_file(maze_file_path)
     @start_pos = find('S')
     @end_pos = find('E')
+    @visited = []
   end
 
   def run
@@ -60,17 +61,29 @@ class MazeSolver
     neighbors(pos).select { |n_pos| self[n_pos] == ' ' }
   end
 
-  def find_path
-    queue = [MazeNode.new(@start_pos)]
-    visited = []
-    until queue.empty?
-      visited << queue.shift
-      return visited.last.path_trace if visited.last.position == @end_pos
-      possible_moves(visited.last.position).each do |pos|
-        if visited.none? { |node| node.position == pos } && self[pos] != '*'
-          debugger
-          queue << MazeNode.new(pos, visited.last)
-        end
+  # def find_path
+  #   queue = [MazeNode.new(@start_pos)]
+  #   visited = []
+  #   until queue.empty?
+  #     visited << queue.shift
+  #     return visited.last.path_trace if visited.last.position == @end_pos
+  #     possible_moves(visited.last.position).each do |pos|
+  #       if visited.none? { |node| node.position == pos } && self[pos] != '*'
+  #         debugger
+  #         queue << MazeNode.new(pos, visited.last)
+  #       end
+  #     end
+  #   end
+  #   nil
+  # end
+
+  def find_path(node = MazeNode.new(@start_pos))
+    @visited << node.position
+    return @visited if node.position == @end_pos
+    possible_moves(node.position).each do |move_pos|
+      unless self[move_pos] == '*' || @visited.include?(move_pos)
+        debugger
+        return find_path(MazeNode.new(move_pos, node))
       end
     end
     nil
