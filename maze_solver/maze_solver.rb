@@ -1,12 +1,13 @@
 require_relative 'maze_node'
+require 'byebug'
 
 class MazeSolver
 
-  attr_reader :start, :end, :grid
+  attr_reader :start_pos, :end_pos, :grid
   def initialize(maze_file_path)
     parse_file(maze_file_path)
-    @start = find('S')
-    @end = find('E')
+    @start_pos = find('S')
+    @end_pos = find('E')
   end
 
   def run
@@ -60,13 +61,16 @@ class MazeSolver
   end
 
   def find_path
-    queue = [MazeNode.new(@start)]
+    queue = [MazeNode.new(@start_pos)]
     visited = []
     until queue.empty?
       visited << queue.shift
-      return visited.last.path_trace if visited.last.position == @end
+      return visited.last.path_trace if visited.last.position == @end_pos
       possible_moves(visited.last.position).each do |pos|
-        queue << MazeNode.new(pos, visited.last)
+        if visited.none? { |node| node.position == pos } && self[pos] != '*'
+          debugger
+          queue << MazeNode.new(pos, visited.last)
+        end
       end
     end
     nil
